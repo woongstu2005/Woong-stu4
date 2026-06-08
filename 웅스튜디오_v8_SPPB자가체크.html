@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>웅 스튜디오 | 시니어 운동 재활</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --green: #1a6b3a; --green-2: #2d8a52; --green-3: #4caf76;
+  --green-pale: #e8f5ee; --white: #ffffff; --bg: #f4f7f5;
+  --gray-1: #f1f3f5; --gray-2: #e2e8e4; --gray-3: #adb5bd;
+  --gray-4: #6c757d; --gray-5: #343a40;
+  --shadow: 0 2px 16px rgba(26,107,58,0.10);
+  --shadow-lg: 0 8px 32px rgba(26,107,58,0.16);
+  --r: 18px; --r-sm: 12px;
+}
+body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--gray-5); min-height: 100vh; }
+header { background: var(--green); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 20px rgba(0,0,0,0.18); }
+.header-inner { max-width: 480px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 13px 18px; }
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo-badge { width: 40px; height: 40px; background: var(--white); border-radius: 11px; display: flex; align-items: center; justify-content: center; }
+.logo-badge i { color: var(--green); font-size: 22px; }
+.logo-text h1 { font-size: 17px; font-weight: 900; color: var(--white); letter-spacing: -0.5px; }
+.logo-text p { font-size: 11px; color: rgba(255,255,255,0.72); margin-top: 1px; }
+.refresh-btn { display: flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.14); border: 1.5px solid rgba(255,255,255,0.28); border-radius: 9px; padding: 8px 13px; color: var(--white); font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; transition: background 0.18s; }
+.refresh-btn:hover { background: rgba(255,255,255,0.24); }
+.refresh-btn.spinning i { animation: spin 0.8s linear infinite; }
+.hero { background: linear-gradient(160deg, var(--green) 0%, var(--green-2) 100%); padding: 30px 20px 36px; text-align: center; max-width: 480px; margin: 0 auto; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; width: 220px; height: 220px; border-radius: 50%; background: rgba(255,255,255,0.06); top: -60px; right: -60px; }
+.hero::after { content: ''; position: absolute; width: 140px; height: 140px; border-radius: 50%; background: rgba(255,255,255,0.05); bottom: -40px; left: -30px; }
+.hero h2 { font-size: 23px; font-weight: 900; color: var(--white); line-height: 1.38; position: relative; }
+.hero p { font-size: 14px; color: rgba(255,255,255,0.80); margin-top: 9px; line-height: 1.65; position: relative; }
+.hero-pills { display: flex; gap: 8px; justify-content: center; margin-top: 20px; flex-wrap: wrap; position: relative; }
+.pill { background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.22); border-radius: 20px; padding: 6px 14px; font-size: 12px; font-weight: 600; color: var(--white); display: flex; align-items: center; gap: 5px; }
+.pill i { font-size: 14px; }
+main { max-width: 480px; margin: 0 auto; padding: 22px 14px 80px; }
+.sec-label { font-size: 14px; font-weight: 700; color: var(--gray-4); display: flex; align-items: center; gap: 6px; margin-bottom: 12px; }
+.sec-label i { color: var(--green); font-size: 18px; }
+.body-card { background: var(--white); border-radius: var(--r); border: 1px solid var(--gray-2); padding: 18px 14px 14px; box-shadow: var(--shadow); margin-bottom: 26px; }
+.body-hint { font-size: 13px; color: var(--gray-3); text-align: center; margin-bottom: 14px; }
+.body-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; }
+.all-tile { grid-column: span 4; display: flex; align-items: center; justify-content: center; gap: 7px; background: var(--green-pale); border: 2px solid var(--green-3); border-radius: var(--r-sm); padding: 11px; font-family: inherit; font-size: 14px; font-weight: 700; color: var(--green); cursor: pointer; transition: all 0.18s; }
+.all-tile:hover, .all-tile.active { background: var(--green); color: var(--white); border-color: var(--green); }
+.all-tile i { font-size: 18px; }
+.part-tile { background: var(--gray-1); border: 2px solid var(--gray-2); border-radius: var(--r-sm); padding: 13px 4px 9px; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; font-family: inherit; transition: all 0.18s; }
+.part-tile:hover { border-color: var(--green-3); background: var(--green-pale); }
+.part-tile.active { border-color: var(--green); background: var(--green-pale); box-shadow: 0 0 0 3px rgba(26,107,58,0.13); }
+.part-tile i { font-size: 24px; color: var(--green-2); }
+.part-tile.active i { color: var(--green); }
+.part-tile .pt-name { font-size: 11px; font-weight: 700; color: var(--gray-4); }
+.part-tile.active .pt-name { color: var(--green); }
+.pt-badge { font-size: 10px; background: var(--gray-2); color: var(--gray-3); border-radius: 8px; padding: 1px 6px; font-weight: 600; }
+.part-tile.active .pt-badge { background: rgba(26,107,58,0.14); color: var(--green); }
+.list-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 13px; }
+.vid-count { font-size: 13px; color: var(--gray-3); font-weight: 500; }
+.video-list { display: flex; flex-direction: column; gap: 13px; }
+.vid-card { background: var(--white); border-radius: var(--r); border: 1px solid var(--gray-2); overflow: hidden; box-shadow: var(--shadow); transition: all 0.2s; cursor: pointer; display: flex; }
+.vid-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+.vid-thumb { width: 130px; min-width: 130px; background: var(--gray-1); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.vid-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.play-btn { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(26,107,58,0.22); opacity: 0; transition: opacity 0.18s; }
+.vid-card:hover .play-btn { opacity: 1; }
+.play-circle { width: 40px; height: 40px; background: rgba(255,255,255,0.92); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.play-circle i { color: var(--green); font-size: 20px; margin-left: 2px; }
+.vid-info { padding: 13px 14px; flex: 1; min-width: 0; }
+.vid-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 7px; }
+.tag { font-size: 10px; font-weight: 700; border-radius: 6px; padding: 2px 7px; }
+.tag-part { background: var(--green-pale); color: var(--green); }
+.tag-easy { background: #e3f2fd; color: #1565c0; }
+.tag-mid { background: #fff3e0; color: #e65100; }
+.tag-hard { background: #fce4ec; color: #c62828; }
+.vid-title { font-size: 14px; font-weight: 700; color: var(--gray-5); line-height: 1.4; margin-bottom: 5px; }
+.vid-desc { font-size: 12px; color: var(--gray-4); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.vid-meta { display: flex; gap: 10px; margin-top: 8px; }
+.vid-meta span { font-size: 11px; color: var(--gray-3); display: flex; align-items: center; gap: 3px; }
+.vid-meta i { font-size: 13px; }
+.empty-state { text-align: center; padding: 52px 20px; background: var(--white); border-radius: var(--r); border: 1px solid var(--gray-2); }
+.empty-state i { font-size: 50px; color: var(--gray-2); }
+.empty-state p { font-size: 14px; color: var(--gray-3); margin-top: 12px; line-height: 1.7; }
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.60); z-index: 500; align-items: center; justify-content: center; padding: 20px; }
+.overlay.open { display: flex; }
+.player-wrap { background: var(--white); border-radius: 18px; overflow: hidden; width: 100%; max-width: 460px; animation: popIn 0.22s ease; position: relative; }
+@keyframes popIn { from { opacity:0; transform:scale(0.95); } to { opacity:1; transform:scale(1); } }
+.yt-frame { width: 100%; aspect-ratio: 16/9; display: block; border: none; }
+.player-info-box { padding: 16px; }
+.player-info-box h3 { font-size: 15px; font-weight: 800; margin-bottom: 6px; }
+.player-info-box p { font-size: 13px; color: var(--gray-4); line-height: 1.5; }
+.close-btn { position: absolute; top: 10px; right: 10px; width: 34px; height: 34px; background: rgba(0,0,0,0.55); border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; }
+.close-btn i { color: white; font-size: 18px; }
+.loading { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 50px 20px; }
+.spinner { width: 36px; height: 36px; border: 3px solid var(--green-pale); border-top-color: var(--green); border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading p { font-size: 13px; color: var(--gray-3); }
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--gray-5); color: var(--white); border-radius: 10px; padding: 10px 20px; font-size: 13px; font-weight: 600; z-index: 9999; opacity: 0; transition: opacity 0.3s; pointer-events: none; white-space: nowrap; }
+.toast.show { opacity: 1; }
+
+/* 인스타 배너 */
+.insta-banner { max-width: 480px; margin: 0 auto; background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; text-decoration: none; }
+.insta-banner:hover { opacity: 0.92; }
+.insta-left { display: flex; align-items: center; gap: 10px; }
+.insta-left i { font-size: 24px; color: white; }
+.insta-left-text p:first-child { font-size: 13px; font-weight: 800; color: white; }
+.insta-left-text p:last-child { font-size: 11px; color: rgba(255,255,255,0.78); margin-top: 1px; }
+.insta-arrow { color: white; font-size: 20px; opacity: 0.8; }
+
+/* 오늘의 운동 추천 */
+.daily-fab { position: fixed; bottom: 24px; right: 20px; background: var(--green); border: none; border-radius: 30px; padding: 13px 18px; box-shadow: 0 4px 20px rgba(26,107,58,0.40); display: flex; align-items: center; gap: 8px; cursor: pointer; z-index: 300; transition: transform 0.2s, box-shadow 0.2s; font-family: inherit; }
+.daily-fab:hover { transform: scale(1.05); box-shadow: 0 6px 24px rgba(26,107,58,0.50); }
+.daily-fab i { color: white; font-size: 22px; }
+.daily-fab span { color: white; font-size: 13px; font-weight: 800; }
+.daily-fab .pulse { width: 8px; height: 8px; background: #ffd43b; border-radius: 50%; animation: pulse 1.8s infinite; flex-shrink: 0; }
+@keyframes pulse { 0%,100%{transform:scale(1);opacity:1;} 50%{transform:scale(1.6);opacity:0.5;} }
+
+.daily-dim { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 390; display: none; }
+.daily-dim.open { display: block; }
+
+.daily-panel { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%) translateY(100%); width: 100%; max-width: 480px; background: var(--white); border-radius: 26px 26px 0 0; box-shadow: 0 -8px 40px rgba(0,0,0,0.18); z-index: 400; transition: transform 0.34s cubic-bezier(0.34,1.4,0.64,1); max-height: 90vh; overflow-y: auto; }
+.daily-panel.open { transform: translateX(-50%) translateY(0); }
+.daily-panel-header { padding: 20px 18px 14px; border-bottom: 1px solid var(--gray-2); display: flex; align-items: flex-start; justify-content: space-between; position: sticky; top: 0; background: white; z-index: 1; border-radius: 26px 26px 0 0; }
+.daily-header-left { display: flex; flex-direction: column; gap: 3px; }
+.daily-header-left h3 { font-size: 18px; font-weight: 900; color: var(--gray-5); }
+.daily-header-left p { font-size: 12px; color: var(--gray-4); }
+.daily-close { background: var(--gray-1); border: none; border-radius: 50%; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
+.daily-close i { color: var(--gray-4); font-size: 17px; }
+
+.daily-body { padding: 16px 14px 32px; display: flex; flex-direction: column; gap: 12px; }
+.daily-tip { background: linear-gradient(135deg, var(--green-pale), #d4eddf); border-radius: var(--r-sm); padding: 12px 14px; display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.daily-tip i { font-size: 20px; color: var(--green); flex-shrink: 0; }
+.daily-tip p { font-size: 12px; color: var(--green); font-weight: 600; line-height: 1.5; }
+
+.daily-card { background: var(--white); border-radius: var(--r); border: 1px solid var(--gray-2); overflow: hidden; box-shadow: var(--shadow); display: flex; cursor: pointer; transition: all 0.2s; position: relative; }
+.daily-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+.daily-num { position: absolute; top: 10px; left: 10px; width: 24px; height: 24px; background: var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; color: white; z-index: 1; }
+.daily-thumb { width: 120px; min-width: 120px; background: var(--gray-1); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.daily-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.daily-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(26,107,58,0.20); opacity: 0; transition: opacity 0.18s; }
+.daily-card:hover .daily-play { opacity: 1; }
+.daily-play-circle { width: 36px; height: 36px; background: rgba(255,255,255,0.92); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.daily-play-circle i { color: var(--green); font-size: 18px; margin-left: 2px; }
+.daily-info { padding: 12px 13px; flex: 1; min-width: 0; }
+.daily-info .vid-tags { margin-bottom: 6px; }
+.daily-info .vid-title { font-size: 13px; font-weight: 700; color: var(--gray-5); line-height: 1.4; margin-bottom: 4px; }
+.daily-info .vid-desc { font-size: 11px; color: var(--gray-4); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.daily-info .vid-meta { margin-top: 7px; }
+
+.daily-reshuffle { width: 100%; background: var(--green-pale); border: 2px dashed var(--green-3); border-radius: var(--r-sm); padding: 13px; font-family: inherit; font-size: 13px; font-weight: 700; color: var(--green); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px; transition: all 0.18s; margin-top: 4px; }
+.daily-reshuffle:hover { background: var(--green); color: white; border-style: solid; }
+.daily-reshuffle i { font-size: 17px; }
+.daily-empty { text-align: center; padding: 40px 20px; }
+.daily-empty i { font-size: 40px; color: var(--gray-2); }
+.daily-empty p { font-size: 13px; color: var(--gray-3); margin-top: 10px; line-height: 1.7; }
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+
+<!-- PLAYER MODAL -->
+<div class="overlay" id="playerOverlay" onclick="closePlayerOnBg(event)">
+  <div class="player-wrap">
+    <button class="close-btn" onclick="closePlayer()"><i class="ti ti-x"></i></button>
+    <iframe class="yt-frame" id="ytFrame" allowfullscreen allow="autoplay"></iframe>
+    <div class="player-info-box">
+      <div class="vid-tags" id="pTags"></div>
+      <h3 id="pTitle"></h3>
+      <p id="pDesc"></p>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-badge"><i class="ti ti-barbell"></i></div>
+      <div class="logo-text">
+        <h1>웅 스튜디오</h1>
+        <p>시니어 운동 재활 센터</p>
+      </div>
+    </div>
+    <button class="refresh-btn" id="refreshBtn" onclick="loadVideos()">
+      <i class="ti ti-refresh"></i>새로고침
+    </button>
+  </div>
+</header>
+
+<div class="hero">
+  <h2>건강한 몸을 위한<br>맞춤형 재활 운동</h2>
+  <p>불편한 부위를 선택하시면<br>딱 맞는 운동 영상을 보여드려요 💪</p>
+  <div class="hero-pills">
+    <div class="pill"><i class="ti ti-video"></i><span id="totalCount">0</span>개 영상</div>
+    <div class="pill"><i class="ti ti-school"></i>한국체육대학교</div>
+    <div class="pill"><i class="ti ti-book"></i>노인체육복지학과 재학</div>
+  </div>
+</div>
+
+<!-- 인스타 배너 -->
+<a class="insta-banner" href="https://www.instagram.com/healthyaging.woong_stu" target="_blank" rel="noopener">
+  <div class="insta-left">
+    <i class="ti ti-brand-instagram"></i>
+    <div class="insta-left-text">
+      <p>@healthyaging.woong_stu</p>
+      <p>인스타그램에서 더 많은 콘텐츠 보기 →</p>
+    </div>
+  </div>
+  <i class="ti ti-chevron-right insta-arrow"></i>
+</a>
+
+
+<div style="max-width:480px;margin:12px auto;background:white;border:1px solid #e2e8e4;border-radius:18px;padding:16px;">
+<b>👨‍🎓 지웅 코치</b><br>
+한국체육대학교 · 노인체육복지학과 재학<br>
+시니어 운동 전문 콘텐츠 제작
+</div>
+<div style="max-width:480px;margin:12px auto;background:#fff8e1;border:1px solid #ffe082;border-radius:12px;padding:12px 14px;">
+⚠️ 본 콘텐츠는 건강 증진을 위한 일반 운동 정보입니다. 통증이 심하거나 질환이 있는 경우 의료진과 상담하세요.
+</div>
+
+<main>
+  <p class="sec-label"><i class="ti ti-map-pin"></i>어떤 운동을 찾고 계신가요?</p>
+  
+<div style="display:flex;gap:8px;margin-bottom:12px;">
+<button class="all-tile active" id="mode-part" onclick="switchMode('part')" style="flex:1;">🦵 부위별</button>
+<button class="all-tile" id="mode-symptom" onclick="switchMode('symptom')" style="flex:1;">🚶 생활 속 불편함</button>
+<button class="all-tile" id="mode-check" onclick="switchMode('check')" style="flex:1;">🩺 내 몸 상태</button>
+</div>
+<div class="body-card">
+
+    <p class="body-hint">터치해서 부위를 선택해보세요 👇</p>
+    <div class="body-grid">
+      <button class="all-tile active" id="btn-all" onclick="filter('all')"><i class="ti ti-layout-grid"></i>전체 보기</button>
+      <button class="part-tile" id="btn-무릎" onclick="filter('무릎')"><i class="ti ti-run"></i><span class="pt-name">무릎</span><span class="pt-badge" id="c-무릎">0</span></button>
+      <button class="part-tile" id="btn-허리" onclick="filter('허리')"><i class="ti ti-body-scan"></i><span class="pt-name">허리</span><span class="pt-badge" id="c-허리">0</span></button>
+      <button class="part-tile" id="btn-고관절" onclick="filter('고관절')"><i class="ti ti-yoga"></i><span class="pt-name">고관절</span><span class="pt-badge" id="c-고관절">0</span></button>
+      <button class="part-tile" id="btn-목" onclick="filter('목')"><i class="ti ti-mood-smile"></i><span class="pt-name">목</span><span class="pt-badge" id="c-목">0</span></button>
+      <button class="part-tile" id="btn-손목/팔꿈치" onclick="filter('손목/팔꿈치')"><i class="ti ti-hand-stop"></i><span class="pt-name">손목/팔꿈치</span><span class="pt-badge" id="c-손목/팔꿈치">0</span></button>
+      <button class="part-tile" id="btn-어깨" onclick="filter('어깨')"><i class="ti ti-user"></i><span class="pt-name">어깨</span><span class="pt-badge" id="c-어깨">0</span></button>
+      <button class="part-tile" id="btn-전신" onclick="filter('전신')"><i class="ti ti-accessible"></i><span class="pt-name">전신</span><span class="pt-badge" id="c-전신">0</span></button>
+    </div>
+  </div>
+
+<div class="body-card" id="symptomPanel" style="display:none;">
+<p class="body-hint">생활 속 불편함을 선택해보세요 👇</p>
+<div class="body-grid">
+<button class="part-tile" onclick="filterSymptom('걷기가힘들어요')"><span class="pt-name">🚶 걷기가 힘들어요</span></button>
+<button class="part-tile" onclick="filterSymptom('일어나기가힘들어요')"><span class="pt-name">🪑 일어나기가 힘들어요</span></button>
+<button class="part-tile" onclick="filterSymptom('넘어질것같아요')"><span class="pt-name">⚖️ 넘어질 것 같아요</span></button>
+<button class="part-tile" onclick="filterSymptom('계단이힘들어요')"><span class="pt-name">🦵 계단이 힘들어요</span></button>
+<button class="part-tile" onclick="filterSymptom('허리가뻐근해요')"><span class="pt-name">🧍 허리가 뻐근해요</span></button>
+<button class="part-tile" onclick="filterSymptom('어깨가안올라가요')"><span class="pt-name">🙆 어깨가 안 올라가요</span></button>
+<button class="part-tile" onclick="filterSymptom('몸이뻣뻣해요')"><span class="pt-name">🤸 몸이 뻣뻣해요</span></button>
+</div>
+</div>
+  <div class="body-card" id="checkPanel" style="display:none;">
+<p class="body-hint">1분 자가체크 후 운동을 추천받아보세요 👇</p>
+<div style="display:flex;flex-direction:column;gap:8px;">
+<label>1. 의자에서 손 안 짚고 일어나기</label>
+<select id="q1"><option value="0">쉽게 가능</option><option value="1">조금 힘듦</option><option value="2">매우 힘듦</option></select>
+<label>2. 한 발로 10초 서기</label>
+<select id="q2"><option value="0">가능</option><option value="1">5초 정도</option><option value="2">거의 못함</option></select>
+<label>3. 10분 이상 걷기</label>
+<select id="q3"><option value="0">가능</option><option value="1">조금 힘듦</option><option value="2">매우 힘듦</option></select>
+<label>4. 계단 오르기</label>
+<select id="q4"><option value="0">괜찮음</option><option value="1">조금 힘듦</option><option value="2">매우 힘듦</option></select>
+<label>5. 최근 1년 낙상 경험</label>
+<select id="q5"><option value="0">없음</option><option value="1">1회</option><option value="2">2회 이상</option></select>
+</div>
+<div id="checkResult" style="margin-top:10px;"></div>
+<button class="all-tile" onclick="runCheck()">결과 보기</button>
+</div>
+<div class="list-header">
+    <p class="sec-label" style="margin-bottom:0;"><i class="ti ti-player-play"></i>운동 영상</p>
+    <span class="vid-count" id="vidCount">0개</span>
+  </div>
+  <div class="video-list" id="videoList">
+    <div class="loading"><div class="spinner"></div><p>영상 불러오는 중...</p></div>
+  </div>
+</main>
+
+<!-- 오늘의 운동 FAB -->
+<button class="daily-fab" onclick="toggleDaily()">
+  <i class="ti ti-flame"></i>
+  <span>오늘의 운동</span>
+  <div class="pulse"></div>
+</button>
+
+<!-- 딤 -->
+<div class="daily-dim" id="dailyDim" onclick="toggleDaily()"></div>
+
+<!-- 오늘의 운동 패널 -->
+<div class="daily-panel" id="dailyPanel">
+  <div class="daily-panel-header">
+    <div class="daily-header-left">
+      <h3>🔥 오늘 딱 5분만 움직여요</h3>
+      <p>시트에서 랜덤으로 고른 오늘의 운동 3가지예요</p>
+    </div>
+    <button class="daily-close" onclick="toggleDaily()"><i class="ti ti-x"></i></button>
+  </div>
+  <div class="daily-body">
+    <div class="daily-tip">
+      <i class="ti ti-bulb"></i>
+      <p>매일 조금씩 꾸준히가 최고의 운동이에요!<br>무리하지 말고 본인 페이스에 맞춰 따라해보세요 😊</p>
+    </div>
+    <div id="dailyList"></div>
+    <button class="daily-reshuffle" onclick="pickDaily()">
+      <i class="ti ti-refresh"></i>다른 운동으로 바꿔줘
+    </button>
+  </div>
+</div>
+
+<script>
+// ✅ 구글 시트 CSV 주소를 여기에 붙여넣으세요 (설정가이드 참고)
+const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1BEraEErMX04IPA0v9dlDR4teaYQVA5-_kgI_ap_k0RU/export?format=csv&gid=0';
+
+const PARTS = ['무릎','허리','고관절','목','손목/팔꿈치','어깨','전신'];
+const SYMPTOMS = ['걷기가힘들어요','일어나기가힘들어요','넘어질것같아요','계단이힘들어요','허리가뻐근해요','어깨가안올라가요','몸이뻣뻣해요'];
+let filterMode='part';
+let videos = [];
+let curFilter = 'all';
+
+function ytId(url) {
+  if (!url) return null;
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+function ytEmbed(id) { return 'https://www.youtube.com/embed/' + id; }
+function ytThumb(id) { return 'https://img.youtube.com/vi/' + id + '/mqdefault.jpg'; }
+
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g,''));
+  return lines.slice(1).map(line => {
+    const cols = []; let cur = ''; let inQ = false;
+    for (const ch of line) {
+      if (ch === '"') { inQ = !inQ; }
+      else if (ch === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
+      else { cur += ch; }
+    }
+    cols.push(cur.trim());
+    const obj = {};
+    headers.forEach((h, i) => { obj[h] = (cols[i]||'').replace(/^"|"$/g,'').trim(); });
+    return obj;
+  }).filter(r => r['유튜브링크'] && r['제목']);
+}
+
+async function loadVideos() {
+  const btn = document.getElementById('refreshBtn');
+  btn.classList.add('spinning');
+  document.getElementById('videoList').innerHTML =
+    '<div class="loading"><div class="spinner"></div><p>영상 불러오는 중...</p></div>';
+  try {
+    const res = await fetch(SHEET_CSV_URL + '&t=' + Date.now());
+    if (!res.ok) throw new Error('fetch failed');
+    const text = await res.text();
+    videos = parseCSV(text);
+    updateCounts(); render();
+    showToast('최신 영상으로 업데이트됐어요 ✓');
+  } catch(e) {
+    document.getElementById('videoList').innerHTML =
+      '<div class="empty-state"><i class="ti ti-alert-circle"></i><p>⚠️ 영상을 불러오지 못했습니다.<br>구글 시트 설정을 확인해주세요.</p></div>';
+    console.error(e);
+  }
+  btn.classList.remove('spinning');
+}
+
+function levelTag(l) {
+  const m = {'초급':'tag-easy','중급':'tag-mid','고급':'tag-hard'};
+  return '<span class="tag ' + (m[l]||'tag-easy') + '">' + (l||'초급') + '</span>';
+}
+
+function render() {
+  const list = curFilter === 'all' ? videos : videos.filter(v => v['부위'] === curFilter);
+  document.getElementById('vidCount').textContent = list.length + '개';
+  const el = document.getElementById('videoList');
+  if (!list.length) {
+    el.innerHTML = '<div class="empty-state"><i class="ti ti-video-off"></i><p>' +
+      (curFilter==='all'?'아직 등록된 영상이 없습니다.<br>구글 시트에 영상을 추가해보세요.':'이 부위의 영상이 아직 없습니다.') + '</p></div>';
+    return;
+  }
+  el.innerHTML = list.map((v, i) => {
+    const vid = ytId(v['유튜브링크']);
+    const thumb = vid
+      ? '<img src="' + ytThumb(vid) + '" alt="' + v['제목'] + '" loading="lazy">'
+      : '<div style="display:flex;align-items:center;justify-content:center;height:100%;"><i class="ti ti-video" style="font-size:30px;color:var(--gray-3);"></i></div>';
+    return '<div class="vid-card" onclick="openPlayer(' + i + ')">' +
+      '<div class="vid-thumb">' + thumb + '<div class="play-btn"><div class="play-circle"><i class="ti ti-player-play"></i></div></div></div>' +
+      '<div class="vid-info">' +
+        '<div class="vid-tags"><span class="tag tag-part">' + (v['부위']||'') + '</span>' + levelTag(v['난이도']) + '</div>' +
+        '<div class="vid-title">' + v['제목'] + '</div>' +
+        (v['설명'] ? '<div class="vid-desc">' + v['설명'] + '</div>' : '') +
+        '<div class="vid-meta">' +
+          (v['운동시간'] ? '<span><i class="ti ti-clock"></i>' + v['운동시간'] + '</span>' : '') +
+          '<span><i class="ti ti-heart"></i>시니어 추천</span>' +
+        '</div>' +
+      '</div></div>';
+  }).join('');
+}
+
+function updateCounts() {
+  document.getElementById('totalCount').textContent = videos.length;
+  PARTS.forEach(p => {
+    const el = document.getElementById('c-' + p);
+    if (el) el.textContent = videos.filter(v => v['부위'] === p).length;
+  });
+}
+
+function filter(part) {
+  curFilter = part;
+  document.querySelectorAll('.part-tile,.all-tile').forEach(b => b.classList.remove('active'));
+  (document.getElementById('btn-' + part) || document.getElementById('btn-all')).classList.add('active');
+  render();
+}
+
+function openPlayer(idx) {
+  const list = curFilter === 'all' ? videos : videos.filter(v => v['부위'] === curFilter);
+  const v = list[idx];
+  if (!v) return;
+  const vid = ytId(v['유튜브링크']);
+  if (!vid) { showToast('유튜브 링크를 확인해주세요'); return; }
+  document.getElementById('ytFrame').src = ytEmbed(vid) + '?autoplay=1';
+  document.getElementById('pTitle').textContent = v['제목'];
+  document.getElementById('pDesc').textContent = v['설명'] || '';
+  document.getElementById('pTags').innerHTML =
+    '<span class="tag tag-part">' + v['부위'] + '</span>' + levelTag(v['난이도']);
+  document.getElementById('playerOverlay').classList.add('open');
+}
+function closePlayer() {
+  document.getElementById('playerOverlay').classList.remove('open');
+  document.getElementById('ytFrame').src = '';
+}
+function closePlayerOnBg(e) {
+  if (e.target === document.getElementById('playerOverlay')) closePlayer();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+
+function switchMode(mode){
+ filterMode=mode;
+ document.getElementById('mode-part').classList.toggle('active',mode==='part');
+ document.getElementById('mode-symptom').classList.toggle('active',mode==='symptom');
+ document.getElementById('mode-check').classList.toggle('active',mode==='check');
+ document.querySelector('.body-card').style.display=mode==='part'?'block':'none';
+ document.getElementById('symptomPanel').style.display=mode==='symptom'?'block':'none';
+ document.getElementById('checkPanel').style.display=mode==='check'?'block':'none';
+ curFilter='all';
+ render();
+}
+
+
+function filterSymptom(tag){
+ const list=videos.filter(v=>(v['증상태그']||'').includes(tag));
+ document.getElementById('vidCount').textContent=list.length+'개';
+ const el=document.getElementById('videoList');
+ if(!list.length){
+   el.innerHTML='<div class="empty-state"><p>해당 증상 운동이 없습니다.</p></div>';return;
+ }
+ el.innerHTML=list.map((v,i)=>{
+ const vid=ytId(v['유튜브링크']);
+ const thumb=vid?'<img src="'+ytThumb(vid)+'">':'';
+ return '<div class="vid-card" onclick="openPlayerDirect(videos.indexOf(v))"><div class="vid-thumb">'+thumb+'</div><div class="vid-info"><div class="vid-tags"><span class="tag tag-part">'+(v['부위']||'')+'</span></div><div class="vid-title">'+v['제목']+'</div><div class="vid-desc">'+(v['설명']||'')+'</div></div></div>';
+ }).join('');
+}
+function runCheck(){
+let s=[1,2,3,4,5].reduce((a,n)=>a+parseInt(document.getElementById('q'+n).value),0);
+let title='',rec='';
+if(s<=2){title='현재 신체기능이 양호합니다';rec='제자리 걷기 · 카프레이즈 · YTWL';}
+else if(s<=5){title='하체 근력 보완이 필요합니다';rec='의자 앉아 일어나기 · 레그컬 · 레그익스텐션';}
+else if(s<=8){title='균형 능력 보완이 필요합니다';rec='한 발 균형 잡기 · 발등 들기 · 제자리 걷기';}
+else{title='기초 체력 향상이 필요합니다';rec='의자 앉아 일어나기 · 제자리 걷기 · 카프레이즈';}
+localStorage.setItem('woong_check_result',title);
+document.getElementById('checkResult').innerHTML='<div style="background:#e8f5ee;padding:12px;border-radius:12px"><b>'+title+'</b><br>추천 운동: '+rec+'</div>';
+}
+loadVideos();
+
+
+/* ── 오늘의 운동 ── */
+let isDailyOpen = false;
+
+function toggleDaily() {
+  isDailyOpen = !isDailyOpen;
+  document.getElementById('dailyPanel').classList.toggle('open', isDailyOpen);
+  document.getElementById('dailyDim').classList.toggle('open', isDailyOpen);
+  if (isDailyOpen && document.getElementById('dailyList').innerHTML === '') {
+    pickDaily();
+  }
+}
+
+function pickDaily() {
+  const el = document.getElementById('dailyList');
+  if (!videos.length) {
+    el.innerHTML = '<div class="daily-empty"><i class="ti ti-video-off"></i><p>영상이 아직 없어요.<br>구글 시트에 영상을 추가해주세요!</p></div>';
+    return;
+  }
+  const shuffled = [...videos].sort(() => Math.random() - 0.5);
+  const picked = shuffled.slice(0, Math.min(3, shuffled.length));
+  // 전체 videos 기준 인덱스 찾기
+  el.innerHTML = picked.map((v, i) => {
+    const globalIdx = videos.indexOf(v);
+    const vid = ytId(v['유튜브링크']);
+    const thumb = vid
+      ? '<img src="' + ytThumb(vid) + '" alt="' + v['제목'] + '" loading="lazy">'
+      : '<div style="display:flex;align-items:center;justify-content:center;height:90px;"><i class="ti ti-video" style="font-size:28px;color:var(--gray-3);"></i></div>';
+    return '<div class="daily-card" onclick="openPlayerDirect(' + globalIdx + ')">' +
+      '<div class="daily-num">' + (i+1) + '</div>' +
+      '<div class="daily-thumb">' + thumb +
+        '<div class="daily-play"><div class="daily-play-circle"><i class="ti ti-player-play"></i></div></div>' +
+      '</div>' +
+      '<div class="daily-info">' +
+        '<div class="vid-tags"><span class="tag tag-part">' + (v['부위']||'') + '</span>' + levelTag(v['난이도']) + '</div>' +
+        '<div class="vid-title">' + v['제목'] + '</div>' +
+        (v['설명'] ? '<div class="vid-desc">' + v['설명'] + '</div>' : '') +
+        '<div class="vid-meta">' +
+          (v['운동시간'] ? '<span><i class="ti ti-clock"></i>' + v['운동시간'] + '</span>' : '') +
+          '<span><i class="ti ti-heart"></i>시니어 추천</span>' +
+        '</div>' +
+      '</div></div>';
+  }).join('');
+}
+
+function openPlayerDirect(idx) {
+  // 패널 닫고 영상 재생
+  isDailyOpen = false;
+  document.getElementById('dailyPanel').classList.remove('open');
+  document.getElementById('dailyDim').classList.remove('open');
+  const v = videos[idx];
+  if (!v) return;
+  const vid = ytId(v['유튜브링크']);
+  if (!vid) { showToast('유튜브 링크를 확인해주세요'); return; }
+  document.getElementById('ytFrame').src = ytEmbed(vid) + '?autoplay=1';
+  document.getElementById('pTitle').textContent = v['제목'];
+  document.getElementById('pDesc').textContent = v['설명'] || '';
+  document.getElementById('pTags').innerHTML =
+    '<span class="tag tag-part">' + v['부위'] + '</span>' + levelTag(v['난이도']);
+  document.getElementById('playerOverlay').classList.add('open');
+}
+</script>
+</body>
+</html>
